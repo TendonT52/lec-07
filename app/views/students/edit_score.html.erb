@@ -1,0 +1,18 @@
+<h1>Editing student score</h1>
+
+<%= @student.name %>
+
+<% @student.score.each do |score| %>
+  <div>
+  <%= render score %>
+  <%= link_to "Edit this score", edit_score_path(score) %> |
+  <%= link_to "Destroy this score", score, method: :delete %>
+  </div>
+<% end %>
+
+<br>
+
+<div>
+  <%= link_to "Show this student", @student %> |
+  <%= link_to "Back to students", students_path %>
+</div>
