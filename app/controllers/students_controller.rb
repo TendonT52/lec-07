@@ -11,7 +11,10 @@ class StudentsController < ApplicationController
   end
 
   def edit_score
-
+    @score_all = Score.where(student_id: params[:id])
+    @maxPoint = Score.where(student_id: params[:id]).maximum(:point)
+    @maxSubject = Score.where(point: @maxPoint)[0].subject
+    @avgPoint = Score.where(student_id: params[:id]).average(:point)
   end
 
   # GET /students/new
@@ -62,13 +65,14 @@ class StudentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_student
-      @student = Student.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def student_params
-      params.require(:student).permit(:name, :dob, :student_no, :class_year)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_student
+    @student = Student.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def student_params
+    params.require(:student).permit(:name, :dob, :student_no, :class_year)
+  end
 end
